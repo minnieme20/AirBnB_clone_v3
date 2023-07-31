@@ -18,7 +18,7 @@ class DBStorage:
 
     def __init__(self):
         """Instantiate a DBStorage object"""
-        user = getenv("HBNB_MYSQ_USER")
+        user = getenv("HBNB_MYSQL_USER")
         pwd = getenv("HBNB_MYSQL_PWD")
         host = getenv("HBNB_MYSQL_HOST")
         db = getenv("HBNB_MYSQL_DB")
@@ -64,7 +64,7 @@ class DBStorage:
 
     def reload(self):
         """reload current database"""
-        self.__session = Base.metadata.create_all(self.__engine)
+        Base.metadata.create_all(self.__engine)
         factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(factory)
         self.__session = Session()
@@ -76,7 +76,7 @@ class DBStorage:
     def get(self, cls, id):
         """A method to retrieve one object
         """
-        obj_dict = models.storage.ll(cls)
+        obj_dict = models.storage.all(cls)
         for k, v in obj_dict.items():
             matchstring = cls + '.' + id
             if k == matchstring:
